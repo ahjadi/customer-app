@@ -1,1 +1,61 @@
-<p>customer-list works!</p>
+<div class="customer-container">
+  <div class="header">
+    <h2>Customer Management</h2>
+    <button (click)="logout()" class="btn btn-secondary">Logout</button>
+  </div>
+
+  <div class="customer-actions">
+    <a routerLink="/customer-form" class="btn btn-primary">Add New Customer</a>
+  </div>
+
+  <table class="customer-table">
+    <thead>
+      <tr>
+        <th>Customer Number</th>
+        <th>Name</th>
+        <th>Date of Birth</th>
+        <th>Gender</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of customers">
+        <td>{{ customer.customerNumber }}</td>
+        <td>
+          <span *ngIf="!editingCustomer || editingCustomer.id !== customer.id">{{ customer.customerName }}</span>
+          <input *ngIf="editingCustomer && editingCustomer.id === customer.id" 
+                 [(ngModel)]="editingCustomer!.customerName" 
+                 type="text">
+        </td>
+        <td>
+          <span *ngIf="!editingCustomer || editingCustomer.id !== customer.id">{{ customer.dateOfBirth }}</span>
+          <input *ngIf="editingCustomer && editingCustomer.id === customer.id" 
+                 [(ngModel)]="editingCustomer!.dateOfBirth" 
+                 type="date">
+        </td>
+        <td>
+          <span *ngIf="!editingCustomer || editingCustomer.id !== customer.id">{{ customer.gender }}</span>
+          <select *ngIf="editingCustomer && editingCustomer.id === customer.id" 
+                  [(ngModel)]="editingCustomer!.gender">
+            <option value="M">M</option>
+            <option value="F">F</option>
+          </select>
+        </td>
+        <td>
+          <div *ngIf="!editingCustomer || editingCustomer.id !== customer.id">
+            <button (click)="editCustomer(customer)" class="btn btn-sm btn-primary">Edit</button>
+            <button (click)="deleteCustomer(customer.id!)" class="btn btn-sm btn-danger">Delete</button>
+          </div>
+          <div *ngIf="editingCustomer && editingCustomer.id === customer.id">
+            <button (click)="updateCustomer()" class="btn btn-sm btn-success">Save</button>
+            <button (click)="cancelEdit()" class="btn btn-sm btn-secondary">Cancel</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="customers.length === 0" class="no-customers">
+    No customers found. <a routerLink="/customer-form">Add a customer</a>
+  </div>
+</div>
