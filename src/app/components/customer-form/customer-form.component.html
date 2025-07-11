@@ -1,1 +1,44 @@
-<p>customer-form works!</p>
+<div class="form-container">
+  <h2>Add New Customer</h2>
+  
+  <form (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="customerName">Customer Name:</label>
+      <input 
+        type="text" 
+        id="customerName" 
+        name="customerName"
+        [(ngModel)]="customer.customerName" 
+        required>
+    </div>
+    
+    <div class="form-group">
+      <label for="dateOfBirth">Date of Birth:</label>
+      <input 
+        type="date" 
+        id="dateOfBirth" 
+        name="dateOfBirth"
+        [(ngModel)]="customer.dateOfBirth" 
+        required>
+    </div>
+    
+    <div class="form-group">
+      <label for="gender">Gender:</label>
+      <select 
+        id="gender" 
+        name="gender"
+        [(ngModel)]="customer.gender" 
+        required>
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+      </select>
+    </div>
+    
+    <div class="error" *ngIf="error">{{ error }}</div>
+    
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Add Customer</button>
+      <button type="button" (click)="cancel()" class="btn btn-secondary">Cancel</button>
+    </div>
+  </form>
+</div>
